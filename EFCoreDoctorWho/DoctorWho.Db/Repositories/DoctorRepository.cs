@@ -1,5 +1,6 @@
 ﻿using DoctorWho.Db.Models;
 using DoctorWho.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,6 +25,10 @@ namespace DoctorWho.Db.Repositories
         public void Remove(Doctor doctor)
         {
             Context.Doctors.Remove(doctor);
+        }
+        public async Task<IEnumerable<Doctor>> ListAsync()
+        {
+            return await Context.Doctors.ToListAsync();
         }
     }
 }

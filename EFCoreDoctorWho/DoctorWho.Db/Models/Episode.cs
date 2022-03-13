@@ -7,6 +7,11 @@ namespace DoctorWho.Db
 {
     public class Episode
     {
+        public Episode()
+        {
+            EpisodeCompanions = new List<EpisodeCompanion>();
+            EpisodeEnemies = new List<EpisodeEnemy>();
+        }
         public int EpisodeId { get; set; }
         public int SeriesNumber { get; set; }
         public int EpisodeNumber { get; set; }
@@ -16,8 +21,8 @@ namespace DoctorWho.Db
         public int AuthorId { get; set; }
         public int DoctorId { get; set; }
         public String Notes { get; set; }
-        public EpisodeCompanion EpisodeCompanions { get; set; }
-        public EpisodeEnemy EpisodeEnemies { get; set; }
+        public List<EpisodeCompanion> EpisodeCompanions { get; set; }
+        public List<EpisodeEnemy> EpisodeEnemies { get; set; }
         public Author Author { get; set; }
         public Doctor Doctor { get; set; }
 

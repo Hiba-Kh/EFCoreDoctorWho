@@ -4,14 +4,16 @@ using DoctorWho.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DoctorWho.Db.Migrations
 {
     [DbContext(typeof(DoctorWhoCoreDbContext))]
-    partial class DoctorWhoCoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220313212038_EpisodeEnemyRelationUpdate")]
+    partial class EpisodeEnemyRelationUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,7 +165,11 @@ namespace DoctorWho.Db.Migrations
 
                     b.HasKey("CompanionId", "EpisodeId");
 
-                    b.HasIndex("EpisodeId");
+                    b.HasIndex("CompanionId")
+                        .IsUnique();
+
+                    b.HasIndex("EpisodeId")
+                        .IsUnique();
 
                     b.ToTable("EpisodeCompanion");
                 });
@@ -231,14 +237,14 @@ namespace DoctorWho.Db.Migrations
             modelBuilder.Entity("DoctorWho.Db.Models.EpisodeCompanion", b =>
                 {
                     b.HasOne("DoctorWho.Db.Models.Companion", "Companion")
-                        .WithMany("CompanionEpisodes")
-                        .HasForeignKey("CompanionId")
+                        .WithOne("CompanionEpisodes")
+                        .HasForeignKey("DoctorWho.Db.Models.EpisodeCompanion", "CompanionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DoctorWho.Db.Episode", "Episode")
-                        .WithMany("EpisodeCompanions")
-                        .HasForeignKey("EpisodeId")
+                        .WithOne("EpisodeCompanions")
+                        .HasForeignKey("DoctorWho.Db.Models.EpisodeCompanion", "EpisodeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

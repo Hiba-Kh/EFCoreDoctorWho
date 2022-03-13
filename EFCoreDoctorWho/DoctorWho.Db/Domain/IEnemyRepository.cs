@@ -11,5 +11,6 @@ namespace DoctorWho.Domain
         Task AddAsync(Enemy enemy);
         void Update(Enemy enemy);
         void Remove(Enemy enemy);
+        Task<Enemy> FindByIdAsync(int id);
     }
 }

@@ -11,5 +11,6 @@ namespace DoctorWho.Domain
         Task AddAsync(Doctor doctor);
         void Update(Doctor doctor);
         void Remove(Doctor doctor);
+        Task<IEnumerable<Doctor>> ListAsync();
     }
 }

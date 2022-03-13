@@ -25,5 +25,9 @@ namespace DoctorWho.Db.Repositories
             Context.Episodes.Remove(episode);
         }
 
+        public async Task<Episode> FindByIdAsync(int id)
+        {
+            return await Context.Episodes.FindAsync(id);
+        }
     }
 }
