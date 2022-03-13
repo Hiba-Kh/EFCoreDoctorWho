@@ -23,5 +23,10 @@ namespace DoctorWho.Db.Repositories
         {
             Context.Enemies.Remove(enemy);
         }
+        public async Task<Enemy> FindByIdAsync(int id)
+        {
+            return await Context.Enemies.FindAsync(id);
+        }
+       
     }
 }
