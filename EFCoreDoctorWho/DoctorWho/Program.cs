@@ -2,7 +2,11 @@
 using DoctorWho.Db;
 using DoctorWho.Db.Mappings;
 using DoctorWho.Db.Models;
+using DoctorWho.Db.Repositories;
+using DoctorWho.Domain;
 using Microsoft.EntityFrameworkCore;
+using Supermarket.API.Domain.Repositories;
+using Supermarket.API.Persistence.Repositories;
 using System;
 using System.Data;
 using System.Linq;
@@ -11,14 +15,24 @@ namespace DoctorWho
 {
     class Program
     {
-        private static DoctorWhoCoreDbContext context = new DoctorWhoCoreDbContext(); 
-        private static DapperAccess depperAccess = new DapperAccess("server = (localdb)\\MSSQLLocalDB; database = DoctorWhoCore; Trusted_Connection=Yes"); 
+        private static readonly DoctorWhoCoreDbContext context = new DoctorWhoCoreDbContext(); 
+        private static readonly DapperAccess depperAccess = new DapperAccess("server = (localdb)\\MSSQLLocalDB; database = DoctorWhoCore; Trusted_Connection=Yes");
+        private static readonly ICompanionRepository companionRepository = new CompanionRepository(context);
+        private static readonly IUnitOfWork unitOfWork = new UnitOfWork(context);
         static void Main(string[] args)
         {
-            ExecuteDbFuncs();
-            ExecuteViewEpisodes();
-            ExecuteStoredProcedure();
+            //ExecuteDbFuncs();
+            //ExecuteViewEpisodes();
+            //ExecuteStoredProcedure();
+            ExecuteCompanionCRUD();
             Console.ReadLine();
+        }
+
+        private async static void ExecuteCompanionCRUD()
+        {
+            Companion companionToInsert = new Companion() { CompanionName = "Micheal Alen", WhoPlayed = "Freema Agyeman" };
+            await companionRepository.AddAsync(companionToInsert);
+            await unitOfWork.CompleteAsync();
         }
 
         static void ExecuteViewEpisodes()
